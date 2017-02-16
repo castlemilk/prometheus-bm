@@ -6,8 +6,9 @@ global:
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
-  external_labels:
-      monitor: 'codelab-monitor'
+  
+external_labels:
+      monitor: 'openstack-monitor'
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -25,3 +26,25 @@ scrape_configs:
 
     static_configs:
       - targets: ['localhost:9090']
+
+  - job_name: 'os-compute'
+    scrape_interval: '15s'
+    static_configs:
+      - targets: ['compute1:9100']
+      - targets: ['compute2:9100']
+      - targets: ['compute3:9100']
+      - targets: ['compute4:9100']
+      - targets: ['compute5:9100']
+      - targets: ['compute6:9100']
+      - targets: ['compute7:9100']
+      - targets: ['compute8:9100']
+   - job_name: 'os-controller'
+     scrape_interval: '15s'
+     static_configs:
+       - targets: ['controller1:9100']
+       - targets: ['controller2:9100']
+       - targets: ['controller3:9100']
+   - job_name: 'os-hypervisor-stats'
+     scrape_interval: '15s'
+     static_config:
+       - targets: ['controller1:9183']
