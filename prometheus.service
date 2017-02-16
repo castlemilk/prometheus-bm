@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Server
+
+[Service]
+User=root
+WorkingDirectory=/opt/prometheus
+ExecStart=/opt/prometheus/prometheus
+
+[Install]
+WantedBy=default.target

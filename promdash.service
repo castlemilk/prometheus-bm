@@ -1,0 +1,9 @@
+[Unit]
+Description=Prometheus Dashboard
+
+[Service]
+User=root
+ExecStart=/usr/local/bin/bundle exec thin start -d
+
+[Install]
+WantedBy=default.target
