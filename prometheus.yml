@@ -7,11 +7,11 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   
-external_labels:
+  external_labels:
       monitor: 'openstack-monitor'
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
+#rule_files:
   # - "first.rules"
   # - "second.rules"
 
@@ -38,13 +38,24 @@ scrape_configs:
       - targets: ['compute6:9100']
       - targets: ['compute7:9100']
       - targets: ['compute8:9100']
-   - job_name: 'os-controller'
-     scrape_interval: '15s'
-     static_configs:
-       - targets: ['controller1:9100']
-       - targets: ['controller2:9100']
-       - targets: ['controller3:9100']
-   - job_name: 'os-hypervisor-stats'
-     scrape_interval: '15s'
-     static_config:
-       - targets: ['controller1:9183']
+  - job_name: 'os-controller'
+    scrape_interval: '15s'
+    static_configs:
+      - targets: ['controller1:9100']
+      - targets: ['controller2:9100']
+      - targets: ['controller3:9100']
+  - job_name: 'os-hypervisor-stats'
+    scrape_interval: '15s'
+    static_configs:
+      - targets: ['controller1:9183']
+  - job_name: 'libvirt'
+    scrape_interval: '15s'
+    static_configs:
+      - targets: ['compute1:8181']
+      - targets: ['compute2:8181']
+      - targets: ['compute3:8181']
+      - targets: ['compute4:8181']
+      - targets: ['compute5:8181']
+      - targets: ['compute6:8181']
+      - targets: ['compute7:8181']
+      - targets: ['compute8:8181']
