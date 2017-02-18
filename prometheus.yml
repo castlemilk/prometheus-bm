@@ -23,10 +23,14 @@ scrape_configs:
 
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
-
+    #honor_labels: true
     static_configs:
-      - targets: ['localhost:9090']
-
+      - targets: ['localhost:9094']
+    relabel_configs:
+      - source_labels: ['__address__']
+        target_label: 'instance'
+        regex: '.*(localhost.*):.*'
+        replacement: $1
   - job_name: 'os-compute'
     scrape_interval: '15s'
     static_configs:
@@ -38,16 +42,30 @@ scrape_configs:
       - targets: ['compute6:9100']
       - targets: ['compute7:9100']
       - targets: ['compute8:9100']
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ".*(compute.*):.*"
+        target_label: instance
+        replacement: $1
   - job_name: 'os-controller'
     scrape_interval: '15s'
     static_configs:
       - targets: ['controller1:9100']
       - targets: ['controller2:9100']
       - targets: ['controller3:9100']
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ".*(controller.*):.*"
+        target_label: instance
   - job_name: 'os-hypervisor-stats'
     scrape_interval: '15s'
     static_configs:
       - targets: ['controller1:9183']
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ".*(controller.*):.*"
+        target_label: instance
+        replacement: $1
   - job_name: 'libvirt'
     scrape_interval: '15s'
     static_configs:
@@ -59,3 +77,7 @@ scrape_configs:
       - targets: ['compute6:8181']
       - targets: ['compute7:8181']
       - targets: ['compute8:8181']
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ".*(compute.*):.*"
+        target_label: instance
