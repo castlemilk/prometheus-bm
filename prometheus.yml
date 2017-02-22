@@ -57,6 +57,17 @@ scrape_configs:
       - source_labels: [__address__]
         regex: ".*(controller.*):.*"
         target_label: instance
+  - job_name: 'rabbitmq'
+    metrics_path: /api/metrics
+    scrape_interval: '15s'
+    static_configs:
+      - targets: ['controller1:15672']
+      - targets: ['controller2:15672']
+      - targets: ['controller3:15672']
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ".*(controller.*):.*"
+        target_label: instance
   - job_name: 'os-hypervisor-stats'
     scrape_interval: '15s'
     static_configs:
@@ -80,4 +91,12 @@ scrape_configs:
     relabel_configs:
       - source_labels: [__address__]
         regex: ".*(compute.*):.*"
+        target_label: instance
+  - job_name: 'mysql'
+    scrape_interval: '15s'
+    static_configs:
+      - targets: ['controller1:9104']
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ".*(controller.*):.*"
         target_label: instance
